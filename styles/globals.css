@@ -2,20 +2,184 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --primary-pink: #FFF0F3;
+  --accent-pink: #FFB5C2;
+  --deep-pink: #FF8FA3;
+  --accent-orange: #FF6B35;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    @apply font-poppins bg-gradient-to-br from-fashion-pink to-white min-h-screen overflow-x-hidden;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-playfair;
   }
 }
 
+@layer components {
+  .glass-card {
+    @apply bg-white/70 backdrop-blur-lg border border-white/30 shadow-lg 
+           hover:-translate-y-1 hover:shadow-xl transition-all duration-300;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-fashion-orange to-fashion-deep-pink 
+           bg-clip-text text-transparent animate-gradient-x;
+  }
+
+  .nav-link {
+    @apply text-gray-600 hover:text-fashion-orange transition-colors duration-200
+           relative after:absolute after:bottom-0 after:left-0 after:w-0 
+           after:h-0.5 after:bg-fashion-orange hover:after:w-full 
+           after:transition-all after:duration-300;
+  }
+}
+
+.loader {
+  border: 3px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 3px solid #FF6B35;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Main Layout Structure */
+.main-content-wrapper {
+  @apply ml-[280px] w-[calc(100%-280px)] min-h-[calc(100vh-64px)] pt-[64px];
+}
+
+.main-content {
+  @apply max-w-6xl mx-auto px-6 py-8;
+}
+
+/* Sidebar */
+.sidebar {
+  @apply fixed left-0 top-[64px] w-[280px] h-[calc(100vh-64px)] 
+         bg-white/80 backdrop-blur-md border-r border-gray-100 
+         overflow-y-auto;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 143, 163, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #FF6B35, #FF8FA3);
+  border-radius: 4px;
+}
+
+/* Feature Cards */
+.feature-card {
+  @apply glass-card p-6 rounded-xl hover:rotate-1 transition-all duration-300;
+}
+
+/* Image Container */
+.image-container {
+  @apply relative w-full h-48 rounded-lg overflow-hidden mb-4;
+}
+
+.image-container img {
+  @apply object-cover w-full h-full transition-transform duration-500 hover:scale-110;
+}
+
+/* Button Styles */
+.gradient-button {
+  @apply bg-gradient-to-r from-fashion-orange to-fashion-deep-pink 
+         text-white px-6 py-2 rounded-full hover:shadow-lg 
+         transition-all duration-300 hover:-translate-y-0.5;
+}
+
+/* Grid Layouts */
+.features-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+}
+
+/* Typography */
+.section-title {
+  @apply text-3xl font-bold mb-6 gradient-text text-center;
+}
+
+.section-subtitle {
+  @apply text-gray-600 text-lg mb-12 text-center max-w-2xl mx-auto;
+}
+
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply overflow-x-hidden min-h-screen;
+}
+
+/* Main content scrollbar */
+main > div::-webkit-scrollbar {
+  width: 8px;
+}
+
+main > div::-webkit-scrollbar-track {
+  background: rgba(255, 143, 163, 0.1);
+}
+
+main > div::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #FF6B35, #FF8FA3);
+  border-radius: 4px;
+}
+
+/* Content area styles */
+.content-area {
+  height: calc(100vh - 144px); /* viewport height - (navbar + footer) */
+  overflow-y: auto;
+}
+
+/* Tab content transition */
+.tab-content {
+  @apply transition-opacity duration-300;
+}
+
+.tab-content-enter {
+  opacity: 0;
+}
+
+.tab-content-enter-active {
+  opacity: 1;
+}
+
+.tab-content-exit {
+  opacity: 1;
+}
+
+.tab-content-exit-active {
+  opacity: 0;
+}
+
+@keyframes grid-shine {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.bg-grid-white\/10 {
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.animate-grid-shine {
+  animation: grid-shine 8s linear infinite;
 }
