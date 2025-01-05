@@ -1,6 +1,6 @@
 # Stylumia NXT Hackathon 2024
 
-**Deployment Link:** [https://stylumia-out-wear.vercel.app/](https://stylumia-out-wear.vercel.app/)
+**Deployment Link:** **[https://stylumia-out-wear.vercel.app/](https://stylumia-out-wear.vercel.app/)**
 
 ## Problem Statement
 The fashion industry is an ever-evolving domain characterized by diverse categories, intricate styles, and rapidly changing trends. Despite its growth, existing systems struggle to address significant challenges, including:
@@ -95,32 +95,35 @@ To set up the Chrome extension for the try-on feature:
       ```bash
       git clone https://github.com/CroWzblooD/Stylumia-OutWear-Backend.git
       ```
-    - Navigate to the backend folder where `server.js` is located.
+    - Alternatively, you can download it as a zip file from [this link](https://github.com/CroWzblooD/Stylumia-OutWear-Backend/archive/refs/heads/main.zip).
 
-2. **Install Backend Dependencies**
-    - Change into the backend directory:
-      ```bash
-      cd Stylumia-OutWear-Backend
-      ```
-    - Install dependencies:
-      ```bash
-      npm install
-      ```
+2. **Backend Structure**
+    - The backend repository contains two folders:
+        - `tryon-backend`: This folder contains the server code required for the try-on feature.
+        - `extension`: This folder contains the code related to the Chrome extension.
 
-3. **Run the Backend Server**
-    - Start the server using Node.js:
+3. **Running the Try-On Backend**
+    - Change into the `tryon-backend` directory:
       ```bash
-      node server.js
+      cd Stylumia-OutWear-Backend/tryon-backend
+      ```
+    - Install dependencies using Nodemon (if not already installed globally):
+      ```bash
+      npm install -g nodemon  # Install Nodemon globally if you haven't already
+      ```
+    - Start the server using Nodemon:
+      ```bash
+      nodemon server.js  # This will run your backend server with live reload capabilities.
       ```
 
 4. **Load Chrome Extension**
-    - Navigate to the extension directory:
+    - Navigate to the `extension` directory:
       ```bash
-      cd ../frontend/extension  # Adjust path as necessary based on your structure.
+      cd ../extension  # Adjust path as necessary based on your structure.
       ```
     - Install dependencies:
       ```bash
-      npm install
+      npm install  # Install necessary packages for the Chrome extension.
       ```
     - Open Chrome and navigate to `chrome://extensions/`.
     - Enable **Developer Mode**.
@@ -131,10 +134,7 @@ The project has potential for expansion into related industries like cosmetics a
 
 This README provides detailed instructions for setting up both the frontend of the Universal Fashion Ontology & Feature Extraction System as well as the backend extension while addressing key challenges in the fashion industry through innovative solutions during the Stylumia NXT Hackathon 2024.
 
+For more details on the backend setup, visit: [Stylumia-OutWear-Backend Repository](https://github.com/CroWzblooD/Stylumia-OutWear-Backend).
+
 Citations:
-[1] https://www.youtube.com/watch?v=FUhxjfodNi0
-[2] https://stackoverflow.com/questions/24577024/install-chrome-extension-form-outside-the-chrome-web-store
-[3] https://support.google.com/chrome_webstore/answer/2664769?visit_id=638709394433459633-3987656391&hl=en&rd=2
-[4] https://www.youtube.com/watch?v=0Ns-EQ6_bto
-[5] https://www.youtube.com/watch?v=7UzOJV_Vjys
-[6] https://www.linkedin.com/in/amanda-morton-5725a540
+[1] https://github.com/CroWzblooD/Stylumia-OutWear-Backend.git
