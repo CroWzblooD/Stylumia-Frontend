@@ -324,20 +324,7 @@ export default function FashionTrend() {
   const [inputPosition, setInputPosition] = useState({ x: 0, y: 0 });
   const [isLoading, setIsLoading] = useState(false);
 
-  // Simplified country codes matching the map's internal codes
-  const availableCountries = [
-    'US',  // United States
-    'CA',  // Canada
-    'RU',  // Russia
-    'CN',  // China
-    'IN',  // India
-    'SA',  // Saudi Arabia
-    'AE',  // UAE
-    'NG',  // Nigeria
-    'KE',  // Kenya
-    'ET',  // Ethiopia
-    'SD'   // Sudan
-  ];
+
 
   const handleCountrySelect = async (e, countryCode) => {
     if (!countryCode) return;

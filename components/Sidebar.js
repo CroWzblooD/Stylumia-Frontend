@@ -1,8 +1,21 @@
 'use client';
 import { useTab } from '../context/TabContext';
+import { useUser } from "@clerk/nextjs";
+import { useRouter } from 'next/router';
 
 export default function Sidebar() {
   const { activeTab, setActiveTab } = useTab();
+  const { isSignedIn } = useUser();
+  const router = useRouter();
+
+  const handleTabClick = (tabId) => {
+    if (tabId === 'dashboard' || isSignedIn) {
+      setActiveTab(tabId);
+    } else {
+      // Redirect to sign-in for protected tabs
+      router.push('/sign-in');
+    }
+  };
 
   const menuItems = [
     {
@@ -48,7 +61,7 @@ export default function Sidebar() {
       {menuItems.map((item) => (
         <button
           key={item.id}
-          onClick={() => setActiveTab(item.id)}
+          onClick={() => handleTabClick(item.id)}
           className={`w-full text-left flex items-start gap-6 p-6 rounded-lg transition-all duration-200
             ${activeTab === item.id 
                ? 'bg-gradient-to-r from-[#FF6B35]/10 to-[#FF8FA3]/10 border-r-4 border-[#FF6B35]' 

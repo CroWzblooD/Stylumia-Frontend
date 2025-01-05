@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import Head from 'next/head';
+
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import Footer from '../components/Footer';
 import { TabProvider, useTab } from '../context/TabContext';
-import ProductCard from '../components/ProductCard';
+
 
 function DynamicContent() {
   const { activeTab } = useTab();
@@ -31,6 +31,9 @@ function DynamicContent() {
           break;
         case 'fashionAnalytics':
           component = (await import('../components/FashionAnalyticsContent')).default;
+          break;
+        case 'profile':
+          component = (await import('../components/Profile/ProfilePage')).default;
           break;
         default:
           component = (await import('../components/DashboardContent')).default;

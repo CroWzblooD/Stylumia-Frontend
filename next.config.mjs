@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  env: {
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
+    CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
+  },
   images: {
     remotePatterns: [
       {
@@ -27,20 +31,22 @@ const nextConfig = {
         protocol: 'https',
         hostname: '*.githubusercontent.com',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'img.clerk.com',
+        pathname: '/**',
       }
     ],
   },
   webpack: (config) => {
-    // Add node-loader
     config.module.rules.push({
       test: /\.node$/,
       use: 'node-loader',
     });
 
-    // Handle native modules
     config.externals = [...(config.externals || []), 'canvas', 'jsdom'];
 
-    // Required for TensorFlow.js
     config.resolve.fallback = {
       ...config.resolve.fallback,
       fs: false,

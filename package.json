@@ -11,6 +11,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@azure/cognitiveservices-computervision": "^8.2.0",
+    "@azure/ms-rest-js": "^2.7.0",
+    "@clerk/nextjs": "^6.9.6",
     "@google-cloud/vision": "^4.3.2",
     "@google/generative-ai": "^0.21.0",
     "@google/model-viewer": "^4.0.0",
@@ -51,9 +54,11 @@
     "stripe": "^14.25.0",
     "tailwind-merge": "^2.6.0",
     "three": "^0.169.0",
+    "tinycolor2": "^1.6.0",
     "unsplash-js": "^7.0.19"
   },
   "devDependencies": {
+    "@types/caseless": "^0.12.5",
     "concurrently": "^8.2.2",
     "postcss": "^8",
     "tailwindcss": "^3.4.1"
