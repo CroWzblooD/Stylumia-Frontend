@@ -39,7 +39,7 @@ export default function Navbar() {
       <div className="max-w-[1400px] mx-auto px-4 h-full flex items-center justify-between">
         <div className="flex items-center gap-8">
           <Link href="/" className="text-2xl font-marcellus font-bold gradient-text">
-            OutWear
+            Stylumia
           </Link>
           
           <div className="hidden md:flex items-center gap-10 ml-20">

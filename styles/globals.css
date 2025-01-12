@@ -183,3 +183,14 @@ main > div::-webkit-scrollbar-thumb {
 .animate-grid-shine {
   animation: grid-shine 8s linear infinite;
 }
+
+/* Add this to your existing styles */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+

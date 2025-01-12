@@ -1,0 +1,153 @@
+.insights_grid {
+    width: 100%;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.stats_row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.stat_card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 12px;
+}
+
+.stat_icon {
+    color: #ff4e50;
+    background: rgba(255,78,80,0.1);
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.stat_content h4 {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.stat_value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.main_grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.grid_column {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.chart_card {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.chart_card h3 {
+    margin: 0 0 16px;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.seasonal_trends {
+    display: grid;
+    gap: 16px;
+}
+
+.season_item {
+    background: white;
+    padding: 16px;
+    border-radius: 8px;
+}
+
+.season_item h4 {
+    margin: 0 0 12px;
+    color: #333;
+}
+
+.trend_list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.trend_list span {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.popular_items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.popular_item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: white;
+    border-radius: 8px;
+}
+
+.rank {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ff4e50;
+    color: white;
+    border-radius: 50%;
+    font-size: 0.9rem;
+}
+
+.item_info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.item_info span {
+    color: #333;
+    font-weight: 500;
+}
+
+.item_info small {
+    color: #666;
+    font-size: 0.8rem;
+}
+
+.popularity {
+    color: #ff4e50;
+    font-weight: 600;
+}
+
+@media (max-width: 1024px) {
+    .main_grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .stats_row {
+        grid-template-columns: 1fr;
+    }
+} 

@@ -8,7 +8,7 @@ export default function Footer() {
           {/* Brand Section */}
           <div className="space-y-4">
             <h3 className="text-2xl font-marcellus gradient-text">
-              Fashion Ontology
+            Stylumia Fashion
             </h3>
             <p className="text-sm text-gray-600 leading-relaxed">
               Transform your online shopping experience with AI-powered virtual try-on technology
@@ -35,7 +35,7 @@ export default function Footer() {
             <div className="space-y-3">
               <a href="mailto:hello@fashionontology.com" className="flex items-center gap-2 text-sm text-gray-600 hover:text-fashion-orange">
                 <Mail className="w-4 h-4" />
-                <span>hello@fashionontology.com</span>
+                <span>Stylumia@fashionontology.com</span>
               </a>
               <a href="tel:+15551234567" className="flex items-center gap-2 text-sm text-gray-600 hover:text-fashion-orange">
                 <Phone className="w-4 h-4" />

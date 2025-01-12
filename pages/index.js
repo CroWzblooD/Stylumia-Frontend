@@ -23,14 +23,20 @@ function DynamicContent() {
         case 'FashionTrend':
           component = (await import('../components/FashionTrend')).default;
           break;
-        case 'sustainable':
-          component = (await import('../components/SustainableContent')).default;
+        case 'RecommendationAgent':
+          component = (await import('../components/SmartRecommendations')).default;
           break;
         case 'aiStylist':
           component = (await import('../components/AIStylistContent')).default;
           break;
         case 'fashionAnalytics':
           component = (await import('../components/FashionAnalyticsContent')).default;
+          break;
+        case 'fashionOntology':
+          component = (await import('../components/FashionOntology')).default;
+          break;
+        case 'ProductList':
+          component = (await import('../components/ProductList')).default;
           break;
         case 'profile':
           component = (await import('../components/Profile/ProfilePage')).default;

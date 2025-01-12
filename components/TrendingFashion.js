@@ -1,383 +1,286 @@
 'use client';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiUpload, FiTrash2, FiTrendingUp } from 'react-icons/fi';
-import { HiOutlineSparkles } from 'react-icons/hi';
-import { searchFashionImages } from './fashionImages';
-
-const getSimilarFashionItems = async (imageBase64) => {
-  try {
-    console.log('Starting Azure Vision analysis...');
-    const response = await fetch('/api/analyze-fashion', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ imageBase64 })
-    });
-
-    if (!response.ok) {
-      throw new Error(`Analysis failed: ${response.statusText}`);
-    }
-
-    const data = await response.json();
-    console.log('Azure Vision results:', data);
-
-    // Safely extract color and clothing type with better matching
-    const dominantColors = data.analysis?.dominantColors || [];
-    const tags = data.analysis?.tags || [];
-    
-    // More specific color matching
-    const mainColor = dominantColors.length > 0 
-      ? dominantColors[0].toLowerCase().replace(/\s+/g, '')
-      : '';
-
-    // More specific clothing type matching
-    const clothingTypes = {
-      shirt: ['shirt', 'tshirt', 't-shirt', 'top'],
-      dress: ['dress', 'gown'],
-      jeans: ['jeans', 'denim', 'pants']
-    };
-
-    let clothingType = '';
-    for (const [type, keywords] of Object.entries(clothingTypes)) {
-      if (tags.some(tag => keywords.some(keyword => 
-        tag.toLowerCase().includes(keyword)
-      ))) {
-        clothingType = type;
-        break;
-      }
-    }
-
-    // Construct search query with better specificity
-    const searchQuery = `${mainColor} ${clothingType}`.trim();
-    console.log('Searching for:', searchQuery);
-    
-    // Get matching images with exact color and type match
-    const matchingImages = searchFashionImages(searchQuery);
-    console.log('Found matches:', matchingImages.length);
-
-    // If no exact matches, try broader search
-    let finalImages = matchingImages;
-    if (matchingImages.length === 0) {
-      finalImages = searchFashionImages(clothingType);
-    }
-
-    return {
-      success: true,
-      analysis: {
-        style: `${mainColor} ${clothingType}`,
-        confidence: 0.95,
-        tags: [...new Set([mainColor, clothingType, ...tags])].filter(Boolean),
-      },
-      results: finalImages
-    };
-  } catch (error) {
-    console.error('Analysis error:', error);
-    throw error;
-  }
-};
-
-const SimilarStyleCard = ({ image, style, confidence, trend }) => (
-  <motion.div
-    whileHover={{ y: -5 }}
-    className="bg-white rounded-xl shadow-md overflow-hidden group"
-  >
-    <div className="relative aspect-[3/4]">
-      <img
-        src={image}
-        alt={style}
-        className="w-full h-full object-cover"
-        loading="lazy"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-          <div className="flex justify-between items-center mb-2">
-            <span className="font-medium">{style}</span>
-            <span className="px-2 py-1 bg-white/20 rounded-full text-xs">
-              {confidence}% Match
-            </span>
-          </div>
-          <div className="flex items-center gap-2 text-sm">
-            <FiTrendingUp className={trend > 0 ? "text-green-400" : "text-red-400"} />
-            <span>{trend > 0 ? "+" : ""}{trend}% This Season</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </motion.div>
-);
-
-const StyleGrid = ({ images, analysis }) => {
-  const categories = [
-    "Casual Wear",
-    "Formal Style",
-    "Street Fashion",
-    "Trendy Look",
-    "Classic Style",
-    "Modern Fashion"
-  ];
-
-  return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {images?.map((img, index) => (
-          <SimilarStyleCard
-            key={index}
-            image={img}
-            style={categories[index] || "Trending Style"}
-            confidence={Math.round((analysis?.confidence || 0.8) * 100 - (index * 5))}
-            trend={Math.round(Math.random() * 40 + 10)}
-          />
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const TrendStats = ({ analysis }) => (
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-    {[
-      {
-        title: "Style Match",
-        value: `${(analysis.confidence * 100).toFixed(1)}%`,
-        icon: "🎯"
-      },
-      {
-        title: "Season Trend",
-        value: analysis.style,
-        icon: "📈"
-      },
-      {
-        title: "Category",
-        value: analysis.tags[0] || "Fashion",
-        icon: "👔"
-      }
-    ].map((stat, index) => (
-      <motion.div
-        key={index}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: index * 0.1 }}
-        className="bg-white rounded-xl p-4 shadow-md"
-      >
-        <div className="flex items-center gap-3">
-          <span className="text-2xl">{stat.icon}</span>
-          <div>
-            <p className="text-sm text-gray-500">{stat.title}</p>
-            <p className="font-semibold text-gray-800">{stat.value}</p>
-          </div>
-        </div>
-      </motion.div>
-    ))}
-  </div>
-);
-
-const StyleInsights = ({ analysis }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    className="bg-white rounded-xl shadow-md p-6 mb-6"
-  >
-    <h3 className="text-lg font-semibold text-gray-800 mb-4">Style Insights</h3>
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div>
-        <h4 className="text-sm font-medium text-gray-600 mb-3">Key Elements</h4>
-        <div className="flex flex-wrap gap-2">
-          {analysis.tags.map((tag, index) => (
-            <span
-              key={index}
-              className="px-3 py-1 bg-[var(--primary-pink)] text-[var(--deep-pink)] rounded-full text-sm"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-      </div>
-      <div>
-        <h4 className="text-sm font-medium text-gray-600 mb-3">Season Forecast</h4>
-        <div className="space-y-2">
-          {analysis.tags.slice(0, 3).map((tag, index) => (
-            <div key={index} className="flex items-center justify-between">
-              <span className="text-sm text-gray-700">{tag}</span>
-              <div className="w-32 h-2 bg-[var(--primary-pink)] rounded-full overflow-hidden">
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: `${90 - (index * 15)}%` }}
-                  className="h-full bg-[var(--accent-orange)] rounded-full"
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  </motion.div>
-);
-
-const ResultCard = ({ title, confidence, images, analysis }) => (
-  <div className="space-y-6">
-    <TrendStats analysis={analysis} />
-    <StyleInsights analysis={analysis} />
-    <StyleGrid images={images} analysis={analysis} />
-  </div>
-);
-
-const ImageUploader = ({ onAnalysisComplete }) => {
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const fileInputRef = useRef(null);
-
-  const resetUploader = () => {
-    setSelectedImage(null);
-    setIsAnalyzing(false);
-    setUploadProgress(0);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = ''; // Reset file input
-    }
-  };
-
-  const handleFile = (file) => {
-    if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setSelectedImage({
-          preview: URL.createObjectURL(file),
-          base64: reader.result.split(',')[1]
-        });
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const analyzeImage = async () => {
-    if (!selectedImage) return;
-    
-    setIsAnalyzing(true);
-    try {
-      const response = await getSimilarFashionItems(selectedImage.base64);
-      console.log('Analysis completed:', response);
-      
-      if (response && response.success) {
-        onAnalysisComplete({
-          similar: [{
-            title: `${response.analysis.style.toUpperCase()} Style`,
-            confidence: `${(response.analysis.confidence * 100).toFixed(1)}%`,
-            images: response.results || [],
-            analysis: response.analysis
-          }]
-        });
-      }
-    } catch (error) {
-      console.error('Analysis error:', error);
-      alert('Failed to analyze image. Please try again.');
-    } finally {
-      setIsAnalyzing(false);
-    }
-  };
-
-  return (
-    <div className="max-w-md mx-auto mb-8">
-      <div className="bg-white rounded-xl shadow-md overflow-hidden">
-        <div className="p-4">
-          {!selectedImage ? (
-            <motion.div
-              className="border-2 border-dashed border-[var(--primary-pink)] rounded-lg p-8 text-center cursor-pointer hover:border-[var(--accent-orange)] transition-colors"
-              onClick={() => fileInputRef.current?.click()}
-              whileHover={{ scale: 1.01 }}
-            >
-              <FiUpload className="mx-auto text-3xl text-[var(--accent-orange)] mb-3" />
-              <p className="text-gray-600">Click to upload an image</p>
-              <p className="text-sm text-gray-400 mt-2">
-                Supports: JPG, PNG (Max 5MB)
-              </p>
-            </motion.div>
-          ) : (
-            <div className="space-y-4">
-              <div className="relative">
-                <img
-                  src={selectedImage.preview}
-                  alt="Preview"
-                  className="w-full h-48 object-cover rounded-lg"
-                />
-                <button
-                  onClick={resetUploader}
-                  className="absolute top-2 right-2 p-1.5 bg-white/80 rounded-full hover:bg-white"
-                >
-                  <FiTrash2 className="text-red-500" />
-                </button>
-              </div>
-
-              {isAnalyzing && (
-                <div className="w-full h-2 bg-[var(--primary-pink)] rounded-full overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: `${uploadProgress}%` }}
-                    className="h-full bg-[var(--accent-orange)]"
-                  />
-                </div>
-              )}
-
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={analyzeImage}
-                disabled={isAnalyzing}
-                className="w-full py-2.5 bg-[var(--accent-orange)] text-white rounded-lg font-medium flex items-center justify-center gap-2 disabled:opacity-50"
-              >
-                {isAnalyzing ? (
-                  <>
-                    <HiOutlineSparkles className="animate-spin" />
-                    Analyzing...
-                  </>
-                ) : (
-                  'Analyze Style'
-                )}
-              </motion.button>
-            </div>
-          )}
-        </div>
-      </div>
-      <input
-        type="file"
-        ref={fileInputRef}
-        className="hidden"
-        accept="image/*"
-        onChange={(e) => handleFile(e.target.files?.[0])}
-      />
-    </div>
-  );
-};
+import { HiOutlineFilter, HiOutlineChartBar } from 'react-icons/hi';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { fashionApi } from '../services/fashionApiService';
+import { FashionShort } from './FashionShort';
+import { blogApi } from '../services/blogApiService';
 
 export default function TrendingFashion() {
-  const [analyzedResults, setAnalyzedResults] = useState(null);
+  const [videos, setVideos] = useState([]);
+  const [nextPageToken, setNextPageToken] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [activeTab, setActiveTab] = useState('shorts');
+  const [blogs, setBlogs] = useState([]);
+  const [blogPage, setBlogPage] = useState(1);
+  const [blogLoading, setBlogLoading] = useState(false);
+  const [blogError, setBlogError] = useState(null);
+  const [hasMoreBlogs, setHasMoreBlogs] = useState(true);
+
+  const fetchShorts = async (pageToken = '') => {
+    try {
+      setLoading(true);
+      const { videos: newVideos, nextPageToken: newToken } = await fashionApi.getYoutubeFashionShorts(pageToken);
+      
+      if (pageToken === '') {
+        setVideos(newVideos || []); // Ensure we always set an array
+      } else {
+        setVideos(prev => [...prev, ...(newVideos || [])]);
+      }
+      setNextPageToken(newToken);
+      setError(null);
+    } catch (err) {
+      console.error('Error fetching shorts:', err);
+      setError('Failed to load fashion shorts');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchBlogs = async (page = 1) => {
+    try {
+      setBlogLoading(true);
+      const { blogs: newBlogs, hasMore } = await blogApi.getFashionBlogs(page);
+      
+      if (page === 1) {
+        setBlogs(newBlogs);
+      } else {
+        setBlogs(prev => [...prev, ...newBlogs]);
+      }
+      setHasMoreBlogs(hasMore);
+      setBlogError(null);
+    } catch (err) {
+      console.error('Error fetching blogs:', err);
+      setBlogError('Failed to load fashion blogs');
+    } finally {
+      setBlogLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (activeTab === 'shorts') {
+      fetchShorts();
+    } else {
+      fetchBlogs();
+    }
+  }, [activeTab]);
+
+  const loadMoreShorts = () => {
+    if (!loading && nextPageToken) {
+      fetchShorts(nextPageToken);
+    }
+  };
+
+  const loadMoreBlogs = () => {
+    if (!blogLoading && hasMoreBlogs) {
+      setBlogPage(prev => prev + 1);
+      fetchBlogs(blogPage + 1);
+    }
+  };
+
+  if (error && activeTab === 'shorts') {
+    return (
+      <div className="container mx-auto px-4 py-8 text-center">
+        <p className="text-red-500 mb-4">{error}</p>
+        <button
+          onClick={() => fetchShorts()}
+          className="px-4 py-2 bg-[#FF6B4A] text-white rounded-lg hover:bg-[#FF6B4A]/90"
+        >
+          Try Again
+        </button>
+      </div>
+    );
+  }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
-      <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">
-          AI Fashion Style Analyzer
-        </h2>
-        <p className="text-gray-600">
-          Upload your fashion image to discover similar styles and trend forecasts
-        </p>
+    <div className="container mx-auto px-4 py-8">
+      {/* Header with Tabs */}
+      <div className="flex flex-col gap-6 mb-8">
+        <div className="flex items-center justify-between">
+          <div className="flex gap-4">
+            <button
+              onClick={() => setActiveTab('shorts')}
+              className={`text-2xl font-bold pb-2 border-b-2 transition-colors ${
+                activeTab === 'shorts' ? 'border-[#FF6B4A] text-[#FF6B4A]' : 'border-transparent'
+              }`}
+            >
+              Fashion Shorts
+            </button>
+            <button
+              onClick={() => setActiveTab('blogs')}
+              className={`text-2xl font-bold pb-2 border-b-2 transition-colors ${
+                activeTab === 'blogs' ? 'border-[#FF6B4A] text-[#FF6B4A]' : 'border-transparent'
+              }`}
+            >
+              Fashion Blogs
+            </button>
+          </div>
+          <div className="flex items-center gap-2">
+            <button className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors">
+              <HiOutlineFilter className="w-5 h-5 text-gray-600" />
+            </button>
+            <button className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors">
+              <HiOutlineChartBar className="w-5 h-5 text-gray-600" />
+            </button>
+          </div>
+        </div>
       </div>
 
-      <ImageUploader onAnalysisComplete={setAnalyzedResults} />
-
-      {analyzedResults && (
-        <AnimatePresence>
+      {/* Content */}
+      <AnimatePresence mode="wait">
+        {activeTab === 'shorts' ? (
+          // Existing Shorts Content
           <motion.div
+            key="shorts"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="space-y-6"
           >
-            {analyzedResults.similar.map((result, index) => (
-              <ResultCard key={index} {...result} />
-            ))}
+            {/* Shorts Grid */}
+            <InfiniteScroll
+              dataLength={videos?.length || 0}
+              next={loadMoreShorts}
+              hasMore={!!nextPageToken}
+              loader={
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mt-4">
+                  {[...Array(5)].map((_, i) => (
+                    <div 
+                      key={`skeleton-${i}`} 
+                      className="aspect-[9/16] bg-gray-200 rounded-xl animate-pulse"
+                    />
+                  ))}
+                </div>
+              }
+              endMessage={
+                <p className="text-center text-gray-500 mt-8">
+                  No more fashion shorts to load!
+                </p>
+              }
+            >
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                <AnimatePresence mode="popLayout">
+                  {Array.isArray(videos) && videos.map((video, index) => (
+                    <motion.div
+                      key={`video-${video.id}-${index}`}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="aspect-[9/16]"
+                    >
+                      <FashionShort video={video} />
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </div>
+            </InfiniteScroll>
+
+            {/* Initial Loading State */}
+            {loading && videos.length === 0 && (
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                {[...Array(10)].map((_, i) => (
+                  <div 
+                    key={`initial-skeleton-${i}`} 
+                    className="aspect-[9/16] bg-gray-200 rounded-xl animate-pulse"
+                  />
+                ))}
+              </div>
+            )}
           </motion.div>
-        </AnimatePresence>
-      )}
+        ) : (
+          // Blogs Content
+          <motion.div
+            key="blogs"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <InfiniteScroll
+              dataLength={blogs.length}
+              next={loadMoreBlogs}
+              hasMore={hasMoreBlogs}
+              loader={<BlogSkeleton />}
+              endMessage={
+                <p className="text-center text-gray-500 mt-8">
+                  You've seen all the latest fashion blogs!
+                </p>
+              }
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {blogs.map((blog, index) => (
+                  <BlogCard key={`${blog.id}-${index}`} blog={blog} />
+                ))}
+              </div>
+            </InfiniteScroll>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function BlogCard({ blog }) {
+  return (
+    <motion.a
+      href={blog.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group block overflow-hidden rounded-xl bg-white shadow-lg hover:shadow-xl transition-shadow"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+    >
+      <div className="aspect-[16/9] overflow-hidden">
+        <img
+          src={blog.image}
+          alt={blog.title}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+        />
+      </div>
+      <div className="p-4">
+        <div className="flex items-center gap-2 mb-3">
+          <img
+            src={blog.author.avatar}
+            alt={blog.author.name}
+            className="w-6 h-6 rounded-full"
+          />
+          <span className="text-sm text-gray-600">{blog.author.name}</span>
+          <span className="text-sm text-gray-400">• {blog.date}</span>
+        </div>
+        <h3 className="text-lg font-semibold mb-2 line-clamp-2">{blog.title}</h3>
+        <p className="text-gray-600 text-sm line-clamp-3">{blog.excerpt}</p>
+        <div className="flex gap-2 mt-3">
+          {blog.categories.slice(0, 3).map((category, index) => (
+            <span
+              key={index}
+              className="text-xs px-2 py-1 bg-gray-100 rounded-full text-gray-600"
+            >
+              {category}
+            </span>
+          ))}
+        </div>
+      </div>
+    </motion.a>
+  );
+}
+
+function BlogSkeleton() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+      {[...Array(3)].map((_, i) => (
+        <div key={i} className="rounded-xl bg-white shadow-lg overflow-hidden">
+          <div className="aspect-[16/9] bg-gray-200 animate-pulse" />
+          <div className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <div className="w-6 h-6 rounded-full bg-gray-200 animate-pulse" />
+              <div className="w-24 h-4 bg-gray-200 animate-pulse rounded" />
+            </div>
+            <div className="w-full h-6 bg-gray-200 animate-pulse rounded mb-2" />
+            <div className="w-3/4 h-4 bg-gray-200 animate-pulse rounded" />
+          </div>
+        </div>
+      ))}
     </div>
   );
 } 
