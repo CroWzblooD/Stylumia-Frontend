@@ -1,40 +1,140 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Stylumia NXT Hackathon 2024
 
-## Getting Started
+**Deployment Link:** **[https://stylumia-out-wear.vercel.app/](https://stylumia-out-wear.vercel.app/)**
 
-First, run the development server:
+## Problem Statement
+The fashion industry is an ever-evolving domain characterized by diverse categories, intricate styles, and rapidly changing trends. Despite its growth, existing systems struggle to address significant challenges, including:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Inadequate tools** to extract and analyze attributes such as fabrics, patterns, and styles from images, videos, and text.
+- **Lack of robust mechanisms** to track and adapt to emerging fashion trends.
+- **Limited personalization options** for recommendations tailored to individual preferences, body types, and occasions.
+- **Insufficient integration** of sustainability insights for eco-friendly fashion choices.
+- **Challenges in bridging the gap** between AI automation and human expertise for fashion-related decisions.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Objective
+This project aims to revolutionize the fashion industry by introducing a universal ontology and AI-driven feature extraction system that:
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+- Enables seamless categorization and trend adaptation.
+- Provides real-time, personalized insights for brands and consumers.
+- Promotes sustainability through eco-conscious fashion practices.
+- Offers an avatar-based feature for users to visualize how clothes will look on their personalized avatars.
+- Includes an extension that allows users to upload a photo and visualize how clothes will look on them directly from any page.
+- Features a Trend Radar that displays global and regional fashion trends in real-time.
+- Introduces a Personalized Fashion Assistant that provides tailored fashion recommendations based on individual preferences and body features.
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## Methodology
+1. **Ontology Development**: Build and maintain a hierarchical taxonomy of fashion attributes using RDF (Resource Description Framework) and OWL (Web Ontology Language).
+2. **Data Ingestion and Feature Extraction**: Collect data through web scraping, images, videos, and textual content using machine learning technologies like TensorFlow and PyTorch.
+3. **Personalized AI Solutions**: Implement an AI Smart Stylist for personalized recommendations, an avatar-based feature, and integrate a Personalized Fashion Assistant.
+4. **Trend Radar and Insights**: Use Natural Language Processing (NLP) for developing the Trend Radar to display global trends.
+5. **Dashboard and Search Engine**: Create user-friendly dashboards for real-time insights with natural language search capabilities.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+## Technologies and Frameworks Used
+- **AI & ML**: TensorFlow, PyTorch
+- **Data Processing**: Pandas, NumPy
+- **Web Scraping & NLP**: BeautifulSoup, Scrapy
+- **Frontend & Backend**: React.js, Next.js
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Frontend Setup Instructions
 
-## Learn More
+### Prerequisites
+Ensure you have the following installed:
+- Node.js (v18 or higher)
+- Git
 
-To learn more about Next.js, take a look at the following resources:
+### Clone the Repository
+1. Open your terminal.
+2. Execute the following commands:
+   ```bash
+   git clone <repository-url>
+   cd fashion-ontology-system/frontend
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+### Install Dependencies
+1. Install the necessary packages:
+   ```bash
+   npm install
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Configure Environment Variables
+1. Create a local environment configuration:
+   ```bash
+   cp .env.example .env.local
+   ```
+2. Edit `.env.local` with the following keys (replace placeholders with your actual keys):
+   ```env
+   FAL_KEY=<YOUR_FAL_KEY>
+   NEXT_PUBLIC_GEMINI_API_KEY=<YOUR_GEMINI_API_KEY>
+   NEXT_PUBLIC_HUGGINGFACE_API_KEY=<YOUR_HUGGINGFACE_API_KEY>
+   NEXT_PUBLIC_UNSPLASH_ACCESS_KEY=<YOUR_UNSPLASH_ACCESS_KEY>
+   SERPAPI_API_KEY=<YOUR_SERPAPI_API_KEY>
+   PEXELS_API_KEY=<YOUR_PEXELS_API_KEY>
+   SAMBANOVA_API_KEY=<YOUR_SAMBANOVA_API_KEY>
+   NEXT_PUBLIC_COHERE_API_KEY=<YOUR_COHERE_API_KEY>
+   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=<YOUR_STRIPE_PUBLISHABLE_KEY>
+   STRIPE_SECRET_KEY=<YOUR_STRIPE_SECRET_KEY>
+   REPLICATE_API_KEY=<YOUR_REPLICATE_API_KEY>
+   AZURE_VISION_KEY=<YOUR_AZURE_VISION_KEY>
+   AZURE_VISION_ENDPOINT=<YOUR_AZURE_VISION_ENDPOINT>
+   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=<YOUR_CLERK_PUBLISHABLE_KEY>
+   CLERK_SECRET_KEY=<YOUR_CLERK_SECRET_KEY>
+   ```
 
-## Deploy on Vercel
+### Running the Application
+1. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Chrome Extension Setup (Try-On Feature)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+To set up the Chrome extension for the try-on feature:
+
+1. **Download the Backend Extension Repository**
+    - Clone the backend repository using the following command:
+      ```bash
+      git clone https://github.com/CroWzblooD/Stylumia-OutWear-Backend.git
+      ```
+    - Alternatively, you can download it as a zip file from [this link](https://github.com/CroWzblooD/Stylumia-OutWear-Backend/archive/refs/heads/main.zip).
+
+2. **Backend Structure**
+    - The backend repository contains two folders:
+        - `tryon-backend`: This folder contains the server code required for the try-on feature.
+        - `extension`: This folder contains the code related to the Chrome extension.
+
+3. **Running the Try-On Backend**
+    - Change into the `tryon-backend` directory:
+      ```bash
+      cd Stylumia-OutWear-Backend/tryon-backend
+      ```
+    - Install dependencies using Nodemon (if not already installed globally):
+      ```bash
+      npm install -g nodemon  # Install Nodemon globally if you haven't already
+      ```
+    - Start the server using Nodemon:
+      ```bash
+      nodemon server.js  # This will run your backend server with live reload capabilities.
+      ```
+
+4. **Load Chrome Extension**
+    - Navigate to the `extension` directory:
+      ```bash
+      cd ../extension  # Adjust path as necessary based on your structure.
+      ```
+    - Install dependencies:
+      ```bash
+      npm install  # Install necessary packages for the Chrome extension.
+      ```
+    - Open Chrome and navigate to `chrome://extensions/`.
+    - Enable **Developer Mode**.
+    - Click **Load unpacked** and select the `extension` folder.
+
+## Future Scope 
+The project has potential for expansion into related industries like cosmetics and lifestyle retail while continuously improving through modular architecture for easy iteration.
+
+This README provides detailed instructions for setting up both the frontend of the Universal Fashion Ontology & Feature Extraction System as well as the backend extension while addressing key challenges in the fashion industry through innovative solutions during the Stylumia NXT Hackathon 2024.
+
+For more details on the backend setup, visit: [Stylumia-OutWear-Backend Repository](https://github.com/CroWzblooD/Stylumia-OutWear-Backend).
+
+Citations:
+[1] https://github.com/CroWzblooD/Stylumia-OutWear-Backend.git
