@@ -248,6 +248,17 @@ Ensure your backend server is running as described before starting any specific 
 
 ---
 
+### Snapshot
+![Screenshot 2025-01-12 142044](https://github.com/user-attachments/assets/eaa8ff39-1546-42ce-a3e3-2c1b4020f41a)
+![Screenshot 2025-01-12 193723](https://github.com/user-attachments/assets/28c95777-387a-490d-8789-a108391b1904)
+![Screenshot 2025-01-12 234836](https://github.com/user-attachments/assets/2e2eee4f-2cc0-429d-8384-cf36d44b2ae3)
+![Screenshot 2025-01-12 200215](https://github.com/user-attachments/assets/d1e5a98e-2ecc-4324-84f7-a0628af828db)
+![Screenshot 2025-01-12 194152](https://github.com/user-attachments/assets/f9caca0d-3cf0-41c6-baa2-c56af2000593)
+![Screenshot 2025-01-12 193627](https://github.com/user-attachments/assets/f25ba4be-352d-4bba-8f15-56a309ed87ac)
+
+
+---
+
 ## Conclusion
 
 You have now successfully set up the Stylumia project, including both frontend and backend components as well as the virtual try-on extension! If you encounter any issues, refer back to this guide or check relevant documentation for troubleshooting tips.
