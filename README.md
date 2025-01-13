@@ -74,9 +74,8 @@ The architecture of the Stylumia solution is designed for modularity, scalabilit
 ---
 
 ### **Architecture Diagram**
-*Insert Architecture Diagram Here*
+
 ![Screenshot 2025-01-12 184722](https://github.com/user-attachments/assets/c757764c-a00f-4a13-8d19-3d89d59a35a8)
-![Screenshot 2025-01-12 185045](https://github.com/user-attachments/assets/20d3f574-30a1-43b6-b4ef-cc21b394c75d)
 
 ---
 
