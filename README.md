@@ -1,4 +1,4 @@
-## **Stylumia NXT 2024 Hackathon Presentation**
+## **Stylumia NXT 2024 Hackathon**
 
 ### **Team Details**
 - **Team Name**: Squirtles
