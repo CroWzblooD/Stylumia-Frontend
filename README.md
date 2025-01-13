@@ -249,13 +249,13 @@ Ensure your backend server is running as described before starting any specific 
 ---
 
 ### Snapshot
-![Screenshot 2025-01-12 142044](https://github.com/user-attachments/assets/eaa8ff39-1546-42ce-a3e3-2c1b4020f41a)
+
+![Screenshot 2025-01-12 193532](https://github.com/user-attachments/assets/6cd64e2d-4833-438e-bebe-16af9ffd2297)
 ![Screenshot 2025-01-12 193723](https://github.com/user-attachments/assets/28c95777-387a-490d-8789-a108391b1904)
 ![Screenshot 2025-01-12 234836](https://github.com/user-attachments/assets/2e2eee4f-2cc0-429d-8384-cf36d44b2ae3)
 ![Screenshot 2025-01-12 200215](https://github.com/user-attachments/assets/d1e5a98e-2ecc-4324-84f7-a0628af828db)
 ![Screenshot 2025-01-12 194152](https://github.com/user-attachments/assets/f9caca0d-3cf0-41c6-baa2-c56af2000593)
 ![Screenshot 2025-01-12 193627](https://github.com/user-attachments/assets/f25ba4be-352d-4bba-8f15-56a309ed87ac)
-
 
 ---
 
