@@ -1,4 +1,4 @@
-## **Stylumia NXT 2024 Hackathon**
+## **Stylumia NXT 2024 Hackathon Presentation**
 
 ### **Team Details**
 - **Team Name**: Squirtles
@@ -46,7 +46,7 @@ This project aims to revolutionize the fashion industry by introducing groundbre
 ## **System Architecture Documentation**
 
 ### **Explanation of the Architecture**
-The architecture of the OutWear solution is designed for modularity, scalability, and adaptability, meeting the complex demands of the fashion industry:
+The architecture of the Stylumia solution is designed for modularity, scalability, and adaptability, meeting the complex demands of the fashion industry:
 
 1. **Ontology Development**:
    - Acts as the backbone of the system with a comprehensive structure for fashion features.
@@ -129,15 +129,15 @@ The architecture of the OutWear solution is designed for modularity, scalability
 
 ## **Setup Instructions**
 
-This guide provides a detailed step-by-step process for setting up the OutWear project, which consists of the frontend, backend, and virtual try-on Chrome extension components. Follow these instructions carefully to ensure successful installation and configuration of all components.
+This guide provides a detailed step-by-step process for setting up the Stylumia project, which consists of the frontend, backend, and virtual try-on Chrome extension components. Follow these instructions carefully to ensure successful installation and configuration of all components.
 
 ### Frontend Setup
 The frontend is built using React.js:
 
 1. Clone the Frontend Repository
     ```bash
-    git clone https://github.com/yourusername/outwear-frontend.git
-    cd outwear-frontend
+    git clone https://github.com/CroWzblooD/Stylumia-Frontend.git
+    cd Stylumia-Frontend
     ```
 
 2. Install Dependencies
@@ -213,7 +213,7 @@ NEO4J_USER=your_neo4j_user
 NEO4J_PASSWORD=your_neo4j_password 
 
 AZURE_VISION_KEY=your_azure_vision_key 
-AZURE_VISION_ENDPOINT=https://outwear.cognitiveservices.azure.com/
+AZURE_VISION_ENDPOINT=https://stylumia.cognitiveservices.azure.com/
 ```
 
 5. Run the Backend Server 
@@ -231,15 +231,15 @@ Your backend server should now be accessible at [http://localhost:8000](http://l
 
 1. Create Extension Folder 
 ```bash 
-mkdir outwear-extension 
-cd outwear-extension 
+mkdir stylumia-extension 
+cd stylumia-extension 
 ```
 
 2. Create Manifest File (manifest.json) 
 Include necessary content as specified in your project documentation.
 
 3. Load Extension in Chrome 
-Open Google Chrome, navigate to `chrome://extensions/`, enable “Developer mode”, click “Load unpacked” and select your `outwear-extension` folder.
+Open Google Chrome, navigate to `chrome://extensions/`, enable “Developer mode”, click “Load unpacked” and select your `stylumia-extension` folder.
 
 ### Running the Virtual Try-On Server
 
@@ -249,7 +249,7 @@ Ensure your backend server is running as described before starting any specific 
 
 ## Conclusion
 
-You have now successfully set up the OutWear project, including both frontend and backend components as well as the virtual try-on extension! If you encounter any issues, refer back to this guide or check relevant documentation for troubleshooting tips.
+You have now successfully set up the Stylumia project, including both frontend and backend components as well as the virtual try-on extension! If you encounter any issues, refer back to this guide or check relevant documentation for troubleshooting tips.
 
 ---
 
