@@ -2,7 +2,7 @@
 
 ### **Team Details**
 - **Team Name**: Squirtles
-- **PPT Link**: [Presentation Link]
+- **PPT Link**: [Stylumia NXT 2024 Presentation](https://he-s3.s3.amazonaws.com/media/sprint/stylumia-nxt-hackathon-2024/team/2209568/e76827apresentation.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA6I2ISGOYMPJGUFGY%2F20250113%2Fap-southeast-1%2Fs3%2Faws4_request&X-Amz-Date=20250113T153602Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=ff01edd427202e3d5a2e48bc97f2c625da7d1d5ca159d6c0c877fd16854e25a4)
 
 ---
 
@@ -173,8 +173,8 @@ The backend is built using FastAPI:
 
 1. Clone the Backend Repository
     ```bash
-    git clone https://github.com/yourusername/outwear-backend.git
-    cd outwear-backend
+    git clone https://github.com/CroWzblooD/Stylumia-Backend.git
+    cd Stylumia-Backend
     ```
 
 2. Create a Virtual Environment
@@ -251,5 +251,10 @@ Ensure your backend server is running as described before starting any specific 
 
 You have now successfully set up the OutWear project, including both frontend and backend components as well as the virtual try-on extension! If you encounter any issues, refer back to this guide or check relevant documentation for troubleshooting tips.
 
-Citations:
-[1] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/15106762/225d82a5-59c6-49e1-a6c2-e401a6dfe010/paste.txt
+---
+
+## Links
+
+- Backend Repository: [Stylumia Backend](https://github.com/CroWzblooD/Stylumia-Backend)
+- Chrome Extension Repository: [Stylumia Extension](https://github.com/CroWzblooD/Stylumia-Extension)
+- Presentation PDF: [Stylumia NXT 2024 Presentation](https://he-s3.s3.amazonaws.com/media/sprint/stylumia-nxt-hackathon-2024/team/2209568/e76827apresentation.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA6I2ISGOYMPJGUFGY%2F20250113%2Fap-southeast-1%2Fs3%2Faws4_request&X-Amz-Date=20250113T153602Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=ff01edd427202e3d5a2e48bc97f2c625da7d1d5ca159d6c0c877fd16854e25a4)
